@@ -11,7 +11,7 @@ CMD env HOME=/root sh /tmp/rustup-init.sh -y --profile minimal --default-toolcha
 CMD ln -sf /root/.cargo/bin/* /usr/local/bin/
 
 CMD git clone --depth 1 --branch ${VERSION} https://github.com/dani-garcia/vaultwarden.git /tmp/vaultwarden
-CMD env HOME=/root PATH="/tmp/makebin:${PATH}" MAKE=gmake VW_VERSION=${VERSION} cargo build --manifest-path /tmp/vaultwarden/Cargo.toml --locked --release --features sqlite,postgresql,vendored_openssl
+CMD env HOME=/root PATH="/tmp/makebin:${PATH}" MAKE=gmake VW_VERSION=${VERSION} CARGO_PROFILE_RELEASE_LTO=thin CARGO_PROFILE_RELEASE_CODEGEN_UNITS=16 cargo build --manifest-path /tmp/vaultwarden/Cargo.toml --locked --release --features sqlite,postgresql,vendored_openssl
 CMD cp /tmp/vaultwarden/target/release/vaultwarden /app/vaultwarden
 
 CMD git clone --depth 1 --branch ${WEB_VAULT_VERSION} https://github.com/vaultwarden/vw_web_builds.git /tmp/vw_web_builds
