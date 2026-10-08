@@ -9,5 +9,5 @@ CMD pw useradd -n app -u ${APP_UID} -g app -d /data -s ${APP_SHELL}
 
 CMD fetch -o /tmp/go.tar.gz https://go.dev/dl/go${GO_VERSION}.freebsd-amd64.tar.gz
 CMD tar -xzf /tmp/go.tar.gz -C /usr/local
-CMD ln -sf /usr/local/go/bin/* /usr/local/bin/
+CMD /bin/sh -c 'ln -sf /usr/local/go/bin/* /usr/local/bin/'
 CMD env CGO_ENABLED=0 GOBIN=/app go install -ldflags "-s -w" github.com/pocketbase/pocketbase/examples/base@${VERSION}
