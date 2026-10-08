@@ -1,7 +1,5 @@
 ARG GO_VERSION=1.27.1
 ARG VERSION=v0.40.4
-ARG APP_UID=6945
-ARG APP_SHELL=/bin/sh
 
 PKG ca_root_nss
 CMD mkdir -p /usr/local/bin

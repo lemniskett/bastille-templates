@@ -1,5 +1,5 @@
 # ARG VERSION=
-ARG APP_UID=8410
+ARG APP_UID=6765
 ARG APP_SHELL=/usr/sbin/nologin
 
 PKG ca_root_nss
