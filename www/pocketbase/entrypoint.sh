@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BIN=/usr/local/bin/steamidled
+BIN=/app/pocketbase
 CONF_DIR=/conf
 ENV_FILE="$CONF_DIR/env"
 ARGS_FILE="$CONF_DIR/args"
@@ -38,4 +38,4 @@ if [ -f "$ARGS_FILE" ]; then
 fi
 
 set -f
-exec timeout 12h "$BIN" $ARGS
+exec "$BIN" $ARGS

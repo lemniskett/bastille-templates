@@ -1,8 +1,19 @@
 #!/bin/sh
 
+BIN=/usr/local/bin/pocket-id
 CONF_DIR=/conf
 ENV_FILE="$CONF_DIR/env"
 ARGS_FILE="$CONF_DIR/args"
+
+if [ ! -e "$BIN" ]; then
+    echo "error: $BIN not found (has the app been built and /app mounted?)" >&2
+    exit 1
+fi
+
+if [ ! -x "$BIN" ]; then
+    echo "error: $BIN is not executable" >&2
+    exit 1
+fi
 
 if [ ! -d "$CONF_DIR" ]; then
     echo "error: $CONF_DIR not found (is the config directory mounted?)" >&2
@@ -27,4 +38,4 @@ if [ -f "$ARGS_FILE" ]; then
 fi
 
 set -f
-exec pocket-id $ARGS
+exec "$BIN" $ARGS
