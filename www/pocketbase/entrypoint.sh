@@ -32,7 +32,7 @@ if [ -f "$ENV_FILE" ]; then
     set +a
 fi
 
-ARGS=
+ARGS="serve"
 if [ -f "$ARGS_FILE" ]; then
     ARGS=$(cat "$ARGS_FILE")
 fi
