@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BIN=/app/pocketbase
+BIN=/app/base
 CONF_DIR=/conf
 ENV_FILE="$CONF_DIR/env"
 ARGS_FILE="$CONF_DIR/args"
