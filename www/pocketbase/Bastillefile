@@ -1,4 +1,4 @@
-ARG VERSION=2.18.0
+# ARG VERSION=
 ARG APP_UID=8410
 ARG APP_SHELL=/usr/sbin/nologin
 
