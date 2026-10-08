@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# PROVIDE: app
+# REQUIRE: LOGIN NETWORKING
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name="app"
+rcvar="app_enable"
+desc="Application"
+
+load_rc_config $name
+
+: ${app_enable:="NO"}
+: ${app_svcuser:="app"}
+: ${app_chdir:="/data"}
+
+pidfile="/var/run/${name}.pid"
+
+# Run under daemon(8)
+#   -r  restart the child if it crashes
+#   -P  write the supervisor's pid (this is what rc.subr tracks)
+#   -u  drop privileges to the service user
+#   -S -T  send stdout/stderr to syslog
+command="/usr/sbin/daemon"
+command_args="-r -R 5 -P ${pidfile} -u ${app_svcuser} -S -T ${name} /entrypoint.sh"
+
+run_rc_command "$1"

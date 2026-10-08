@@ -1,0 +1,51 @@
+#!/bin/sh
+
+BIN=/app/vaultwarden
+WEB_VAULT=/app/web-vault
+CONF_DIR=/conf
+ENV_FILE="$CONF_DIR/env"
+ARGS_FILE="$CONF_DIR/args"
+
+if [ ! -e "$BIN" ]; then
+    echo "error: $BIN not found (has the app been built and /app mounted?)" >&2
+    exit 1
+fi
+
+if [ ! -x "$BIN" ]; then
+    echo "error: $BIN is not executable" >&2
+    exit 1
+fi
+
+if [ ! -d "$WEB_VAULT" ]; then
+    echo "error: $WEB_VAULT not found (has the web vault been built and /app mounted?)" >&2
+    exit 1
+fi
+
+if [ ! -d "$CONF_DIR" ]; then
+    echo "error: $CONF_DIR not found (is the config directory mounted?)" >&2
+    exit 1
+fi
+
+WEB_VAULT_FOLDER="$WEB_VAULT"
+DATA_FOLDER=/data
+export WEB_VAULT_FOLDER DATA_FOLDER
+
+if [ -f "$ENV_FILE" ]; then
+    mode=$(stat -L -f '%Lp' "$ENV_FILE") || exit 1
+    if [ $(( 0$mode & 077 )) -ne 0 ]; then
+        echo "error: $ENV_FILE has mode $mode; must not be accessible by group or others (chmod 600)" >&2
+        exit 1
+    fi
+
+    set -a
+    . "$ENV_FILE"
+    set +a
+fi
+
+ARGS=
+if [ -f "$ARGS_FILE" ]; then
+    ARGS=$(cat "$ARGS_FILE")
+fi
+
+set -f
+exec "$BIN" $ARGS
