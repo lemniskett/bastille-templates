@@ -32,7 +32,7 @@ if [ -f "$ENV_FILE" ]; then
     set +a
 fi
 
-ARGS="serve --dir ./pb_data --migrationsDir ./pb_migrations --hooksDir ./pb_migrations"
+ARGS="serve --dir ./pb_data --migrationsDir ./pb_migrations --hooksDir ./pb_hooks"
 if [ -f "$ARGS_FILE" ]; then
     ARGS=$(cat "$ARGS_FILE")
 fi
