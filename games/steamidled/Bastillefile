@@ -1,6 +1,6 @@
 ARG VERSION=2.18.0
-ARG APP_UID=8410
-ARG APP_SHELL=/usr/sbin/nologin
+ARG APP_UID=6945
+ARG APP_SHELL=/bin/sh
 
 PKG ca_root_nss
 CMD pw groupadd -n app -g ${APP_UID}
@@ -8,9 +8,8 @@ CMD pw useradd -n app -u ${APP_UID} -g app -d /data -s ${APP_SHELL}
 CP rc.d/app /usr/local/etc/rc.d/app
 CP entrypoint.sh /entrypoint.sh
 
-CMD mkdir -p /usr/local/bin
-CMD fetch -o /usr/local/bin/pocket-id https://github.com/pocket-id/pocket-id/releases/download/v${VERSION}/pocket-id_freebsd_amd64
-CMD chmod 755 /usr/local/bin/pocket-id
+PKG node26 npm-node26
+CMD npm install -g @louisraetz/steamidled
 
 SYSRC app_enable=YES
 SERVICE app start
