@@ -3,6 +3,7 @@ ARG APP_UID=8410
 ARG APP_SHELL=/usr/sbin/nologin
 
 PKG ca_root_nss
+CMD mkdir -p /usr/local/bin
 CMD pw groupadd -n app -g ${APP_UID}
 CMD pw useradd -n app -u ${APP_UID} -g app -d /data -s ${APP_SHELL}
 CP rc.d/app /usr/local/etc/rc.d/app
