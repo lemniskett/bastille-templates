@@ -2,7 +2,7 @@ ARG VERSION=1.37.4
 ARG RUST_VERSION=1.99.0
 ARG WEB_VAULT_VERSION=v2026.9.0
 
-PKG ca_root_nss git bash gmake pkgconf perl5 node26 npm-node26 postgresql17-client
+PKG ca_root_nss git bash gmake pkgconf perl5 python3 node26 npm-node26 postgresql17-client
 CMD mkdir -p /usr/local/bin /app /tmp/makebin
 CMD ln -sf /usr/local/bin/gmake /tmp/makebin/make
 
