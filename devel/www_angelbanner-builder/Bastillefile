@@ -1,0 +1,11 @@
+ARG RUST_VERSION=1.99.0
+
+PKG ca_root_nss git
+CMD mkdir -p /usr/local/bin /usr/local/libexec /usr/local/cargo /usr/local/rustup /app /root/cargo
+
+CMD fetch -o /tmp/rustup-init.sh https://sh.rustup.rs
+CMD env CARGO_HOME=/usr/local/cargo RUSTUP_HOME=/usr/local/rustup sh /tmp/rustup-init.sh -y --profile minimal --default-toolchain ${RUST_VERSION}
+CMD ln -sf /usr/local/cargo/bin/* /usr/local/bin/
+
+CP build-angelbanner.sh /usr/local/libexec/build-angelbanner.sh
+CMD /usr/local/libexec/build-angelbanner.sh
