@@ -1,9 +1,9 @@
 ARG VERSION=1.37.4
 ARG RUST_VERSION=1.99.0
-ARG WEB_VAULT_VERSION=v2026.9.1
+ARG WEB_VAULT_VERSION=v2026.7.0
 
-PKG ca_root_nss git bash gmake pkgconf perl5 python3 node26 npm-node26 postgresql17-client
-CMD mkdir -p /usr/local/bin /usr/local/libexec /usr/local/cargo /usr/local/rustup /app /tmp/makebin /root/cargo /root/npm
+PKG ca_root_nss git gmake pkgconf perl5 postgresql17-client
+CMD mkdir -p /usr/local/bin /usr/local/libexec /usr/local/cargo /usr/local/rustup /app /tmp/makebin /root/cargo
 CMD ln -sf /usr/local/bin/gmake /tmp/makebin/make
 
 CMD fetch -o /tmp/rustup-init.sh https://sh.rustup.rs
