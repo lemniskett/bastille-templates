@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BIN=/app/angel-banner
+BIN=/app/angelbanner
 ARTWORKS=/app/artworks_filtered
 CONF_DIR=/conf
 ENV_FILE="$CONF_DIR/env"

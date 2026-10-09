@@ -1,6 +1,6 @@
 ARG RUST_VERSION=1.99.0
 
-PKG ca_root_nss git
+PKG ca_root_nss
 CMD mkdir -p /usr/local/bin /usr/local/libexec /usr/local/cargo /usr/local/rustup /app /root/cargo
 
 CMD fetch -o /tmp/rustup-init.sh https://sh.rustup.rs
