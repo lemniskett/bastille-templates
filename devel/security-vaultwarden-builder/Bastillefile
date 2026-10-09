@@ -1,20 +1,16 @@
 ARG VERSION=1.37.4
 ARG RUST_VERSION=1.99.0
-ARG WEB_VAULT_VERSION=v2026.9.0
+ARG WEB_VAULT_VERSION=v2026.9.1
 
 PKG ca_root_nss git bash gmake pkgconf perl5 python3 node26 npm-node26 postgresql17-client
-CMD mkdir -p /usr/local/bin /app /tmp/makebin
+CMD mkdir -p /usr/local/bin /usr/local/libexec /usr/local/cargo /usr/local/rustup /app /tmp/makebin /root/cargo /root/npm
 CMD ln -sf /usr/local/bin/gmake /tmp/makebin/make
 
 CMD fetch -o /tmp/rustup-init.sh https://sh.rustup.rs
-CMD env HOME=/root sh /tmp/rustup-init.sh -y --profile minimal --default-toolchain ${RUST_VERSION} --component rustfmt,clippy
-CMD ln -sf /root/.cargo/bin/* /usr/local/bin/
+CMD env CARGO_HOME=/usr/local/cargo RUSTUP_HOME=/usr/local/rustup sh /tmp/rustup-init.sh -y --profile minimal --default-toolchain ${RUST_VERSION} --component rustfmt,clippy
+CMD ln -sf /usr/local/cargo/bin/* /usr/local/bin/
 
-CMD git clone --depth 1 --branch ${VERSION} https://github.com/dani-garcia/vaultwarden.git /tmp/vaultwarden
-CMD env HOME=/root PATH="/tmp/makebin:${PATH}" MAKE=gmake VW_VERSION=${VERSION} CARGO_PROFILE_RELEASE_LTO=thin CARGO_PROFILE_RELEASE_CODEGEN_UNITS=16 cargo build --manifest-path /tmp/vaultwarden/Cargo.toml --locked --release --features sqlite,postgresql,vendored_openssl
-CMD cp /tmp/vaultwarden/target/release/vaultwarden /app/vaultwarden
-
-CMD git clone --depth 1 --branch ${WEB_VAULT_VERSION} https://github.com/vaultwarden/vw_web_builds.git /tmp/vw_web_builds
-CMD npm ci --prefix /tmp/vw_web_builds
-CMD npm run dist:oss:selfhost --prefix /tmp/vw_web_builds/apps/web
-CMD cp -a /tmp/vw_web_builds/apps/web/build /app/web-vault
+CP build-vaultwarden.sh /usr/local/libexec/build-vaultwarden.sh
+CP build-web-vault.sh /usr/local/libexec/build-web-vault.sh
+CMD /usr/local/libexec/build-vaultwarden.sh ${VERSION}
+CMD /usr/local/libexec/build-web-vault.sh ${WEB_VAULT_VERSION}
